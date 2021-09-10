@@ -1,4 +1,4 @@
-#include "Action.h"
+#include "action.h"
 #include <iostream>
 #include <fstream>
 #include <random>
@@ -26,8 +26,8 @@ std::string generate_username() {
 	unsigned noun_number = noun_int(gen);
 	unsigned line_length_adverbs = 19;
 	unsigned line_length_nouns = 45;
-	unsigned adverb_pos = adverb_number * line_length_adverbs;
-	unsigned noun_pos = noun_number * line_length_nouns;
+	unsigned adverb_pos = adverb_number * line_length_adverbs + 1;
+	unsigned noun_pos = noun_number * line_length_nouns + 1;
 	
 	infile_adverbs.seekg(adverb_pos);
 	infile_nouns.seekg(noun_pos);
