@@ -6,16 +6,12 @@
 #include <string>
 #include <cctype>
 
-/*	PROBLEM IN CODE
-*	seekg goes to the wrong places in files.
-*/
-
 // Pick a random word from each file and concatenate.
 std::string generate_username() {
 	std::string filename_adverbs = "6K_adverbs.txt";
 	std::string filename_nouns = "91K_nouns.txt";
-	std::ifstream infile_adverbs = open_files(filename_adverbs);
-	std::ifstream infile_nouns = open_files(filename_nouns);
+	std::fstream infile_adverbs = open_files(filename_adverbs);
+	std::fstream infile_nouns = open_files(filename_nouns);
 	
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -24,14 +20,9 @@ std::string generate_username() {
 
 	unsigned adverb_number = adverb_int(gen);
 	unsigned noun_number = noun_int(gen);
-	unsigned line_length_adverbs = 19;
-	unsigned line_length_nouns = 45;
-	unsigned adverb_pos = adverb_number * line_length_adverbs + 1;
-	unsigned noun_pos = noun_number * line_length_nouns + 1;
+	GotoLine(infile_adverbs, adverb_number);
+	GotoLine(infile_nouns, noun_number);
 	
-	infile_adverbs.seekg(adverb_pos);
-	infile_nouns.seekg(noun_pos);
-
 	std::string adverb;
 	std::string noun;
 	getline(infile_adverbs, adverb);
@@ -42,11 +33,15 @@ std::string generate_username() {
 	std::cout << "Adverb: " << adverb << std::endl;
 	std::cout << "Noun: " << noun << std::endl;
 
+	// Remove '/r' from the end of the words.
+	adverb = adverb.substr(0, adverb.size() - 1);
+	noun = noun.substr(0, noun.size() - 1);
+	
 	return adverb + noun;
 }
 
-std::ifstream open_files(std::string filename) {
-	std::ifstream infile;
+std::fstream open_files(std::string filename) {
+	std::fstream infile;
 	try {
 		infile.open(filename);
 		if (infile.fail())
@@ -57,4 +52,11 @@ std::ifstream open_files(std::string filename) {
 		std::cerr << "Failed to open file.\n";
 	}
 	return infile;
+}
+
+std::fstream& GotoLine(std::fstream& file, unsigned num){
+	file.seekg(std::ios::beg);
+	for(int i = 0; i < num - 1; i++)
+		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return file;
 }
