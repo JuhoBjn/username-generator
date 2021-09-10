@@ -8,8 +8,8 @@
 
 // Pick a random word from each file and concatenate.
 std::string generate_username() {
-	std::string filename_adverbs = "6K_adverbs.txt";
-	std::string filename_nouns = "91K_nouns.txt";
+	std::string filename_adverbs = "/home/juhobjn/projektit/username-generator/6K_adverbs.txt";
+	std::string filename_nouns = "/home/juhobjn/projektit/username-generator/91K_nouns.txt";
 	std::fstream infile_adverbs = open_files(filename_adverbs);
 	std::fstream infile_nouns = open_files(filename_nouns);
 	
@@ -54,7 +54,7 @@ std::fstream open_files(std::string filename) {
 	return infile;
 }
 
-std::fstream& GotoLine(std::fstream& file, unsigned num){
+std::fstream& GotoLine(std::fstream& file, int num){
 	file.seekg(std::ios::beg);
 	for(int i = 0; i < num - 1; i++)
 		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
