@@ -8,36 +8,32 @@
 
 // Pick a random word from each file and concatenate.
 std::string generate_username() {
-	std::string filename_adverbs = "6K_adverbs.txt";
-	std::string filename_nouns = "91K_nouns.txt";
-	std::fstream infile_adverbs = open_files(filename_adverbs);
+	std::string filename_adjectives = "english-adjectives.txt";
+	std::string filename_nouns = "english-nouns.txt";
+	std::fstream infile_adjectives = open_files(filename_adjectives);
 	std::fstream infile_nouns = open_files(filename_nouns);
 	
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> adverb_int(1, 6276);
-	std::uniform_int_distribution<> noun_int(1, 90963);
+	std::uniform_int_distribution<> adjective_int(1, 1347);
+	std::uniform_int_distribution<> noun_int(1, 1525);
 
-	unsigned adverb_number = adverb_int(gen);
+	unsigned adjective_number = adjective_int(gen);
 	unsigned noun_number = noun_int(gen);
-	GotoLine(infile_adverbs, adverb_number);
+	GotoLine(infile_adjectives, adjective_number);
 	GotoLine(infile_nouns, noun_number);
 	
-	std::string adverb;
+	std::string adjective;
 	std::string noun;
-	getline(infile_adverbs, adverb);
+	getline(infile_adjectives, adjective);
 	getline(infile_nouns, noun);
-	adverb[0] = toupper(adverb[0]);
+	adjective[0] = toupper(adjective[0]);
 	noun[0] = toupper(noun[0]);
 
-	std::cout << "Adverb: " << adverb << std::endl;
+	std::cout << "Adjective: " << adjective << std::endl;
 	std::cout << "Noun: " << noun << std::endl;
 
-	// Remove '/r' from the end of the words.
-	adverb = adverb.substr(0, adverb.size() - 1);
-	noun = noun.substr(0, noun.size() - 1);
-	
-	return adverb + noun;
+	return adjective + noun;
 }
 
 std::fstream open_files(std::string filename) {
