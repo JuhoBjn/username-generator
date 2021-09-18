@@ -12,7 +12,7 @@ std::string generate_username() {
 	std::string filename_nouns = "english-nouns.txt";
 	std::fstream infile_adjectives = open_files(filename_adjectives);
 	std::fstream infile_nouns = open_files(filename_nouns);
-	
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> adjective_int(1, 1347);
@@ -29,9 +29,6 @@ std::string generate_username() {
 	getline(infile_nouns, noun);
 	adjective[0] = toupper(adjective[0]);
 	noun[0] = toupper(noun[0]);
-
-	std::cout << "Adjective: " << adjective << std::endl;
-	std::cout << "Noun: " << noun << std::endl;
 
 	return adjective + noun;
 }
@@ -55,4 +52,10 @@ std::fstream& GotoLine(std::fstream& file, int num){
 	for(int i = 0; i < num - 1; i++)
 		file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	return file;
+}
+
+void help(){
+	std::cout << "Usage: username-generator [arguments]\n";
+	std::cout << "Options:\n";
+	std::cout << "	-h		Display this information.\n";
 }
