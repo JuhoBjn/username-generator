@@ -3,9 +3,11 @@
 #include <string.h>
 
 int main(int argc, char* argv[]) {
-	if(strchr(argv[1], 'h')){
-		help();
-		return 0;
+	if(argc > 1){
+		if(strchr(argv[1], 'h')){
+			help();
+			return 0;
+		}
 	}
 	std::cout << "Welcome to the username generator!\n";
 	std::string username = generate_username();
